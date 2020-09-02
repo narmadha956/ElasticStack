@@ -1,9 +1,9 @@
 pipeline { 
     agent any 
     stages {
-        stage('Build') { 
+        stage('ConfigDisplay') { 
             steps { 
-               sh "echo 'building..'"
+               sh """kubectl config view"""
             }
         }
         stage('Test'){
@@ -11,9 +11,14 @@ pipeline {
                sh "echo 'Testing...'" 
             }
         }
-        stage('Deploy') {
+        stage('Deploy ElasticSearch') {
             steps {
-               sh """kubectl config vieW"""            
+               sh """kubectl apply -f ConfigFiles/elastic.yaml"""            
+            }
+        }
+         stage('Deploy Kibana') {
+            steps {
+               sh """kubectl apply -f apm_es_kibana.yaml"""            
             }
         }
     }
