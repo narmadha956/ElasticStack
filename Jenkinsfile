@@ -18,7 +18,8 @@ pipeline {
         }
          stage('Deploy Kibana') {
             steps {
-               sh """kubectl apply -f ConfigFiles/apm_es_kibana.yaml"""            
+               sh """kubectl apply -f ConfigFiles/apm_es_kibana.yaml"""   
+               sh """kubectl port-forward service/kibana-sample-kb-http 5601"""
             }
         }
     }
